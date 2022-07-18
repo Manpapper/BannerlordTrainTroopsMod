@@ -1,9 +1,11 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.Core;
-using System.Collections.Generic;
-using System.Linq;
+using TaleWorlds.Library;
 using TrainTroops.Settings;
 
 namespace TrainTroops
