@@ -43,6 +43,9 @@ namespace TrainTroops
                             targetIndex++;
                         }
 
+                        //If minXPForUpgrade = 0 we skip this iteration
+                        if (minXPForUpgrade == 0)
+                            continue;
 
                         int trainableTroopCount = troop.Number - troop.Xp / minXPForUpgrade;
 
