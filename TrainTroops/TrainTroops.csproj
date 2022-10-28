@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PartyToTrain.cs" />
     <Compile Include="TrainTroopsSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\DefaultTrainTroopsSettings.cs" />

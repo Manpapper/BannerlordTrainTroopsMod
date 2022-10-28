@@ -6,7 +6,6 @@ using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
-using TrainTroops.Settings;
 
 namespace TrainTroops
 {
@@ -14,76 +13,123 @@ namespace TrainTroops
     {
         public override void RegisterEvents()
         {
-            CampaignEvents.DailyTickPartyEvent.AddNonSerializedListener(this, new System.Action<MobileParty>(this.addXp));
+            CampaignEvents.DailyTickPartyEvent.AddNonSerializedListener(this, new System.Action<MobileParty>(this.train));
         }
 
-        private void addXp(MobileParty party)
+        private void train(MobileParty party)
         {
-            //Only train troops in main hero party to alleviate CPU load
+            //Whatever the case we can only add xp to Lord Party and Caravans
+            //For exemple Caravan don't have a leader in their party (so no Leadership skill)
+            if (!party.IsLordParty && !party.IsCaravan)
+                return;
+
+
+            //Main Party XP Only
+            if (TrainTroopsSettings.Instance.PartyToTrain.SelectedIndex == (int) PartyToTrain.Player && party.IsMainParty)
+            {
+                if (!party.IsMainParty)
+                    return;
+
+                addXp(party, party.LeaderHero);                
+            }
+
+            //Allies Only
+            if (TrainTroopsSettings.Instance.PartyToTrain.SelectedIndex == (int)PartyToTrain.Allies)
+            {
+                //Caravans don't have Leader so we have to check Owner for skill
+                if (party.IsCaravan == true && (party.Owner == Hero.MainHero || party.Owner.CurrentSettlement.OwnerClan.Kingdom == Hero.MainHero.Clan.Kingdom))
+                    addXp(party, party.Owner); 
+
+                //Check if leader is an "Ally" of Player
+                if (party.IsLordParty == true && ( party.LeaderHero.Clan == Hero.MainHero.Clan || party.LeaderHero.Clan.Kingdom == Hero.MainHero.Clan.Kingdom))
+                    addXp(party, party.LeaderHero);
+
+            }
+
+            //Every Party
+            if (TrainTroopsSettings.Instance.PartyToTrain.SelectedIndex == (int)PartyToTrain.All)
+            {
+                if (party.IsCaravan)
+                    addXp(party, party.Owner);
+
+                if (party.IsLordParty)
+                    addXp(party, party.LeaderHero);
+            }
+
+        }
+
+        private void addXp(MobileParty party, Hero hero)
+        {
+            int troopXPMultiplier = TrainTroopsSettings.Instance.TroopXPMultiplier;
+            int LevelDifferenceMultiplier = TrainTroopsSettings.Instance.LevelDifferenceMultiplier;
             if (party.IsMainParty)
             {
-                int leaderLeadership = Hero.MainHero.GetSkillValue(DefaultSkills.Leadership);
-
-                int totalXPEarned = 0;
-                Dictionary<string, int> troopsReadyToUpgrade = new Dictionary<string, int>();
-                for (int i = 0; i < party.MemberRoster.Count; i++)
-                {
-                    //IMPORTANT: bear in mind we only get a COPY. So after any changes to the troop, info will be inconsistent.
-                    TroopRosterElement troop = party.MemberRoster.GetElementCopyAtIndex(i);
-                    //Only gain XP if character LVL is lower than the leader's LVL AND the troop can be upgraded
-                    if (troop.Character.Level < Hero.MainHero.Level && !troop.Character.UpgradeTargets.IsEmpty())
-                    {
-                        int lvlDifference = Hero.MainHero.Level - troop.Character.Level;
-
-                        //Get the least xp this troop needs to lvl up (seems it could have different troops to level up to and need different xp for each one)
-                        int minXPForUpgrade = troop.Character.GetUpgradeXpCost(party.Party, 0);
-                        int targetIndex = 1;
-                        while (targetIndex < troop.Character.UpgradeTargets.Length) {
-                            minXPForUpgrade = System.Math.Min(minXPForUpgrade, troop.Character.GetUpgradeXpCost(party.Party, targetIndex));
-                            targetIndex++;
-                        }
-
-                        //If minXPForUpgrade = 0 we skip this iteration
-                        if (minXPForUpgrade == 0)
-                            continue;
-
-                        int trainableTroopCount = troop.Number - troop.Xp / minXPForUpgrade;
-
-                        //Perform the math
-                        int xpEarned = (leaderLeadership * TrainTroopsSettings.Instance.TroopXPMultiplier + lvlDifference * TrainTroopsSettings.Instance.LevelDifferenceMultiplier) * trainableTroopCount;
-                        party.Party.MemberRoster.AddXpToTroopAtIndex(xpEarned, i);
-                        int troopsReadyToUpgradeCount = (troop.Xp + xpEarned) / minXPForUpgrade;
-                        //Report troops ready to upgrade
-                        if (troopsReadyToUpgradeCount != 0)
-                        {
-                            //Will update the party button notification so that the red icon is shown (?)
-                            //PlayerUpdateTracker.Current.GetPartyNotificationText();
-                            //PlayerUpdateTracker.Current.UpdatePartyNotification();
-
-                            //TODO: get the troop name, for now it only gets it in english
-                            string troopName = troop.Character.ToString();
-                            //Count how many troops of each type are ready to upgrade
-
-
-                            //If a troop with the same name has already been counted, add it
-                            if (troopsReadyToUpgrade.ContainsKey(troopName))
-                            {
-                                troopsReadyToUpgrade[troopName] += troopsReadyToUpgradeCount;
-                            } 
-                            //Else add it anew
-                            else
-                            {
-                                troopsReadyToUpgrade.Add(troopName, troopsReadyToUpgradeCount);
-                            }
-                        }
-
-                        totalXPEarned += xpEarned;
-                    }
-                }
-
-                InformationManager.DisplayMessage(new InformationMessage("Total training XP for the day: " + totalXPEarned + "." + getTroopsReadyToUpgradeMessage(troopsReadyToUpgrade)));
-                
+                troopXPMultiplier = TrainTroopsSettings.Instance.PlayerTroopXPMultiplier;
+                LevelDifferenceMultiplier = TrainTroopsSettings.Instance.PlayerLevelDifferenceMultiplier;
             }
+
+            int leaderLeadership = hero.GetSkillValue(DefaultSkills.Leadership);
+
+            int totalXPEarned = 0;
+            Dictionary<string, int> troopsReadyToUpgrade = new Dictionary<string, int>();
+            for (int i = 0; i < party.MemberRoster.Count; i++)
+            {
+                //IMPORTANT: bear in mind we only get a COPY. So after any changes to the troop, info will be inconsistent.
+                TroopRosterElement troop = party.MemberRoster.GetElementCopyAtIndex(i);
+                //Only gain XP if character LVL is lower than the leader's LVL AND the troop can be upgraded
+                if (troop.Character.Level < hero.Level && !troop.Character.UpgradeTargets.IsEmpty())
+                {
+                    int lvlDifference = hero.Level - troop.Character.Level;
+
+                    //Get the least xp this troop needs to lvl up (seems it could have different troops to level up to and need different xp for each one)
+                    int minXPForUpgrade = troop.Character.GetUpgradeXpCost(party.Party, 0);
+                    int targetIndex = 1;
+                    while (targetIndex < troop.Character.UpgradeTargets.Length)
+                    {
+                        minXPForUpgrade = System.Math.Min(minXPForUpgrade, troop.Character.GetUpgradeXpCost(party.Party, targetIndex));
+                        targetIndex++;
+                    }
+
+                    //If minXPForUpgrade = 0 we skip this iteration
+                    if (minXPForUpgrade == 0)
+                        continue;
+
+                    int trainableTroopCount = troop.Number - troop.Xp / minXPForUpgrade;
+
+                    //Perform the math
+                    int xpEarned = (leaderLeadership * troopXPMultiplier + lvlDifference * LevelDifferenceMultiplier) * trainableTroopCount;
+                    party.Party.MemberRoster.AddXpToTroopAtIndex(xpEarned, i);
+                    int troopsReadyToUpgradeCount = (troop.Xp + xpEarned) / minXPForUpgrade;
+                    //Report troops ready to upgrade
+                    if (troopsReadyToUpgradeCount != 0)
+                    {
+                        //Will update the party button notification so that the red icon is shown (?)
+                        //PlayerUpdateTracker.Current.GetPartyNotificationText();
+                        //PlayerUpdateTracker.Current.UpdatePartyNotification();
+
+                        //TODO: get the troop name, for now it only gets it in english
+                        string troopName = troop.Character.ToString();
+                        //Count how many troops of each type are ready to upgrade
+
+
+                        //If a troop with the same name has already been counted, add it
+                        if (troopsReadyToUpgrade.ContainsKey(troopName))
+                        {
+                            troopsReadyToUpgrade[troopName] += troopsReadyToUpgradeCount;
+                        }
+                        //Else add it anew
+                        else
+                        {
+                            troopsReadyToUpgrade.Add(troopName, troopsReadyToUpgradeCount);
+                        }
+                    }
+
+                    totalXPEarned += xpEarned;
+                }
+            }
+
+            if(party.IsMainParty)
+                InformationManager.DisplayMessage(new InformationMessage("Total training XP for the day: " + totalXPEarned + "." + getTroopsReadyToUpgradeMessage(troopsReadyToUpgrade)));
 
         }
 
