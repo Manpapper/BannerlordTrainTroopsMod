@@ -35,24 +35,23 @@ namespace TrainTroops
 
             //Allies Only
             if (TrainTroopsSettings.Instance.PartyToTrain.SelectedIndex == (int)PartyToTrain.Allies)
-            {
+            {            
                 //Caravans don't have Leader so we have to check Owner for skill
-                if (party.IsCaravan == true && (party.Owner == Hero.MainHero || party.Owner.CurrentSettlement.OwnerClan.Kingdom == Hero.MainHero.Clan.Kingdom))
+                if (party.IsCaravan == true && party.Owner != null && (party.Owner == Hero.MainHero || party.Owner.CurrentSettlement.OwnerClan.Kingdom == Hero.MainHero.Clan.Kingdom))
                     addXp(party, party.Owner); 
 
                 //Check if leader is an "Ally" of Player
-                if (party.IsLordParty == true && ( party.LeaderHero.Clan == Hero.MainHero.Clan || party.LeaderHero.Clan.Kingdom == Hero.MainHero.Clan.Kingdom))
+                if (party.IsLordParty == true && party.LeaderHero != null && ( party.LeaderHero.Clan == Hero.MainHero.Clan || party.LeaderHero.Clan.Kingdom == Hero.MainHero.Clan.Kingdom))
                     addXp(party, party.LeaderHero);
-
             }
 
             //Every Party
             if (TrainTroopsSettings.Instance.PartyToTrain.SelectedIndex == (int)PartyToTrain.All)
             {
-                if (party.IsCaravan)
+                if (party.IsCaravan && party.Owner != null)
                     addXp(party, party.Owner);
 
-                if (party.IsLordParty)
+                if (party.IsLordParty && party.LeaderHero != null)
                     addXp(party, party.LeaderHero);
             }
 
@@ -60,6 +59,10 @@ namespace TrainTroops
 
         private void addXp(MobileParty party, Hero hero)
         {
+            //In case of hero being null
+            if (hero == null)
+                return;
+
             int troopXPMultiplier = TrainTroopsSettings.Instance.TroopXPMultiplier;
             int LevelDifferenceMultiplier = TrainTroopsSettings.Instance.LevelDifferenceMultiplier;
             if (party.IsMainParty)

@@ -6,8 +6,7 @@
     <UpdateItem>
         <ModuleFolder Value="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\TrainTroops"/>
         <!-- A direct path of your module -->   
-        <ChangeNotes Value="Possibility to choose on which party the training will be effective (Player Only, Allies, All)
-Custom multiplier for player party" />
+        <ChangeNotes Value="Should fix a crash when train all is selected" />
         <!-- Insert patch notes -->
         <Tags> 
             <!-- You can use the following tags: -->
