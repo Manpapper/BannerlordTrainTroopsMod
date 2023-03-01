@@ -37,12 +37,40 @@ namespace TrainTroops
             if (TrainTroopsSettings.Instance.PartyToTrain.SelectedIndex == (int)PartyToTrain.Allies)
             {            
                 //Caravans don't have Leader so we have to check Owner for skill
-                if (party.IsCaravan == true && party.Owner != null && (party.Owner == Hero.MainHero || party.Owner.CurrentSettlement.OwnerClan.Kingdom == Hero.MainHero.Clan.Kingdom))
-                    addXp(party, party.Owner); 
+                if (party.IsCaravan == true && party.Owner != null)
+                {
+                    //Caravans own by the player
+                    if(party.Owner == Hero.MainHero)
+                    {
+                        addXp(party, party.Owner);
+                        return;
+                    }
+
+                    //Caravans own by Allies
+                    if(party.Owner.CurrentSettlement != null && party.Owner.CurrentSettlement.OwnerClan != null && party.Owner.CurrentSettlement.OwnerClan.Kingdom == Hero.MainHero.Clan.Kingdom)
+                    {
+                        addXp(party, party.Owner);
+                        return;
+                    }
+                }
 
                 //Check if leader is an "Ally" of Player
-                if (party.IsLordParty == true && party.LeaderHero != null && ( party.LeaderHero.Clan == Hero.MainHero.Clan || party.LeaderHero.Clan.Kingdom == Hero.MainHero.Clan.Kingdom))
-                    addXp(party, party.LeaderHero);
+                if (party.IsLordParty == true && party.LeaderHero != null)
+                {
+                    //Companion or Player
+                    if(party.LeaderHero.Clan == Hero.MainHero.Clan)
+                    {
+                        addXp(party, party.LeaderHero);
+                        return;
+                    }
+
+                    //Allied Party
+                    if(party.LeaderHero.Clan != null && party.LeaderHero.Clan.Kingdom == Hero.MainHero.Clan.Kingdom)
+                    {
+                        addXp(party, party.LeaderHero);
+                        return;
+                    }
+                }                    
             }
 
             //Every Party
@@ -54,7 +82,6 @@ namespace TrainTroops
                 if (party.IsLordParty && party.LeaderHero != null)
                     addXp(party, party.LeaderHero);
             }
-
         }
 
         private void addXp(MobileParty party, Hero hero)

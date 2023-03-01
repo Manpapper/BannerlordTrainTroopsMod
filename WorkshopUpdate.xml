@@ -6,7 +6,7 @@
     <UpdateItem>
         <ModuleFolder Value="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\TrainTroops"/>
         <!-- A direct path of your module -->   
-        <ChangeNotes Value="Change compatibility version to v1.0.1" />
+        <ChangeNotes Value="v1.3.3" />
         <!-- Insert patch notes -->
         <Tags> 
             <!-- You can use the following tags: -->
@@ -15,7 +15,7 @@
             <!-- Game Mode: Singleplayer, Multiplayer -->
             <!-- Compatible Version: e1.9.0, v1.0.0,... The currently available versions can be found at the Steam Workshop "Browse by Tag" section -->
             <Tag Value="Singleplayer" />
-            <Tag Value="v1.0.1" />
+            <Tag Value="v1.1.0" />
         </Tags>
     </UpdateItem>
 </Tasks>
