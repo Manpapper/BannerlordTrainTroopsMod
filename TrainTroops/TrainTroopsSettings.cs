@@ -11,10 +11,10 @@ namespace TrainTroops
     class TrainTroopsSettings
     {
         ISettingsProvider _provider;
-        public int PlayerTroopXPMultiplier { get => _provider.PlayerTroopXPMultiplier; set => _provider.PlayerTroopXPMultiplier = value; }
-        public int PlayerLevelDifferenceMultiplier { get => _provider.PlayerLevelDifferenceMultiplier; set => _provider.PlayerLevelDifferenceMultiplier = value; }
-        public int TroopXPMultiplier { get => _provider.TroopXPMultiplier; set => _provider.TroopXPMultiplier = value; }
-        public int LevelDifferenceMultiplier { get => _provider.LevelDifferenceMultiplier; set => _provider.LevelDifferenceMultiplier = value; }
+        public float PlayerTroopXPMultiplier { get => _provider.PlayerTroopXPMultiplier; set => _provider.PlayerTroopXPMultiplier = value; }
+        public float PlayerLevelDifferenceMultiplier { get => _provider.PlayerLevelDifferenceMultiplier; set => _provider.PlayerLevelDifferenceMultiplier = value; }
+        public float TroopXPMultiplier { get => _provider.TroopXPMultiplier; set => _provider.TroopXPMultiplier = value; }
+        public float LevelDifferenceMultiplier { get => _provider.LevelDifferenceMultiplier; set => _provider.LevelDifferenceMultiplier = value; }
 
         public Dropdown<string> PartyToTrain { get => _provider.PartyToTrain ; set => _provider.PartyToTrain = value; }
 

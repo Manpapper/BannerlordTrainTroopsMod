@@ -9,13 +9,13 @@ namespace TrainTroops.Settings
 {
     interface ISettingsProvider
     {
-        int PlayerTroopXPMultiplier { get; set; }
+        float PlayerTroopXPMultiplier { get; set; }
 
-        int PlayerLevelDifferenceMultiplier { get; set; }
+        float PlayerLevelDifferenceMultiplier { get; set; }
 
-        int TroopXPMultiplier { get; set; }
+        float TroopXPMultiplier { get; set; }
 
-        int LevelDifferenceMultiplier { get; set; }
+        float LevelDifferenceMultiplier { get; set; }
 
         Dropdown<string> PartyToTrain { get; set; }
     }

@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace TrainTroops
 {
@@ -90,8 +93,8 @@ namespace TrainTroops
             if (hero == null)
                 return;
 
-            int troopXPMultiplier = TrainTroopsSettings.Instance.TroopXPMultiplier;
-            int LevelDifferenceMultiplier = TrainTroopsSettings.Instance.LevelDifferenceMultiplier;
+            float troopXPMultiplier = TrainTroopsSettings.Instance.TroopXPMultiplier;
+            float LevelDifferenceMultiplier = TrainTroopsSettings.Instance.LevelDifferenceMultiplier;
             if (party.IsMainParty)
             {
                 troopXPMultiplier = TrainTroopsSettings.Instance.PlayerTroopXPMultiplier;
@@ -127,7 +130,7 @@ namespace TrainTroops
                     int trainableTroopCount = troop.Number - troop.Xp / minXPForUpgrade;
 
                     //Perform the math
-                    int xpEarned = (leaderLeadership * troopXPMultiplier + lvlDifference * LevelDifferenceMultiplier) * trainableTroopCount;
+                    int xpEarned = (int)Math.Round((leaderLeadership * troopXPMultiplier + lvlDifference * LevelDifferenceMultiplier) * trainableTroopCount, MidpointRounding.AwayFromZero); ;
                     party.Party.MemberRoster.AddXpToTroopAtIndex(xpEarned, i);
                     int troopsReadyToUpgradeCount = (troop.Xp + xpEarned) / minXPForUpgrade;
                     //Report troops ready to upgrade
@@ -158,17 +161,24 @@ namespace TrainTroops
                 }
             }
 
-            if(party.IsMainParty)
-                InformationManager.DisplayMessage(new InformationMessage("Total training XP for the day: " + totalXPEarned + "." + getTroopsReadyToUpgradeMessage(troopsReadyToUpgrade)));
+            if (party.IsMainParty)
+            {
+                TextObject startingText = new TextObject("{=ifJye6ml23N}Total training XP for the day:");
+                InformationManager.DisplayMessage(new InformationMessage(startingText.ToString() + " " + totalXPEarned + "." + getTroopsReadyToUpgradeMessage(troopsReadyToUpgrade)));
+            }
 
         }
 
         private static string getTroopsReadyToUpgradeMessage(Dictionary<string, int> troopsReadyToUpgrade)
         {
+            TextObject startingText = new TextObject("{=ifJye6ml24N}Troops ready to upgrade:");
+
             string troopsReadyToUpgradeMessage = "";
             if (troopsReadyToUpgrade.Count != 0)
             {
-                troopsReadyToUpgradeMessage += " Troops ready to upgrade: ";
+                troopsReadyToUpgradeMessage += " ";
+                troopsReadyToUpgradeMessage += startingText.ToString();
+                troopsReadyToUpgradeMessage += " ";
                 for (int i = 0; i < troopsReadyToUpgrade.Count; i++)
                 {
                     troopsReadyToUpgradeMessage += troopsReadyToUpgrade.Keys.ElementAt(i) + ": " + troopsReadyToUpgrade[troopsReadyToUpgrade.Keys.ElementAt(i)];
@@ -185,7 +195,6 @@ namespace TrainTroops
         public override void SyncData(IDataStore dataStore)
         {
         }
-
     }
 
 }

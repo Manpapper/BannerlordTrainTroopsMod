@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+      xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd" >
+  <tags>
+    <tag language="Français" />
+  </tags>
+  <strings>
+    <string id="ifJye6ml10N" text="Choix d'Application du Multiplicateur"/>
+    <string id="ifJye6ml11N" text="Choisissez à quel(s) groupe(s) sera l'entraînement sera appliqué."/>
+    <string id="ifJye6ml12N" text="Joueur"/>
+    <string id="ifJye6ml13N" text="Alliés (Joueur, Compagnons, Royaume)"/>
+    <string id="ifJye6ml14N" text="Tous le monde"/>
+    <string id="ifJye6ml15N" text="Multiplicateur XP Troupes"/>
+    <string id="ifJye6ml16N" text="(Par Défaut 3) Plus la valeur est élevé, plus le niveau de Meneur d'Hommes aura de l'influence."/>
+    <string id="ifJye6ml17N" text="Multiplicateurs Globaux"/>
+    <string id="ifJye6ml18N" text="Multiplicateurs Joueur"/>
+    <string id="ifJye6ml19N" text="(Par Défaut 10) Plus la valeur est élevé, plus la différence de niveau aura de l'influence."/>
+    <string id="ifJye6ml20N" text="(Par Défaut 3) Plus la valeur est élevé, plus le niveau de Meneur d'Hommes aura de l'influence pour le groupe du joueur."/>
+    <string id="ifJye6ml21N" text="Multiplicateur Niveaux de différence"/>
+    <string id="ifJye6ml22N" text="(Par Défaut 10) Plus la valeur est élevé, plus la différence de niveau aura de l'influence pour le groupe du joueur."/>
+	<string id="ifJye6ml23N" text="XP Total produit dans la journée:"/>
+	<string id="ifJye6ml24N" text="Troupes prêtes à être améliorés:"/>
+  </strings>
+</base>

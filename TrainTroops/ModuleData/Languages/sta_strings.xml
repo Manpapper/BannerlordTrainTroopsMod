@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+      xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd" >
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <string id="ifJye6ml10N" text="Apply Troop Multiplier"/>
+    <string id="ifJye6ml11N" text="Choose to which party the training will be apply to."/>
+    <string id="ifJye6ml12N" text="Player"/>
+    <string id="ifJye6ml13N" text="Allies (Player, Companions, Kingdom)"/>
+    <string id="ifJye6ml14N" text="All"/>
+    <string id="ifJye6ml15N" text="Troop XP Multiplier"/>
+    <string id="ifJye6ml16N" text="(Default 3) The higher this is, the more impact leadership will have on training."/>
+    <string id="ifJye6ml17N" text="Global Multiplier"/>
+    <string id="ifJye6ml18N" text="Player Multiplier"/>
+    <string id="ifJye6ml19N" text="(Default 10) The higher this is, the more impact level difference will have on training."/>
+    <string id="ifJye6ml20N" text="(Default 3) The higher this is, the more impact leadership will have on training for the player party."/>
+    <string id="ifJye6ml21N" text="Level Difference Multiplier"/>
+    <string id="ifJye6ml22N" text="(Default 10) The higher this is, the more impact level difference will have on training for the player party."/>
+	<string id="ifJye6ml23N" text="Total training XP for the day:"/>
+	<string id="ifJye6ml24N" text="Troops ready to upgrade:"/>
+  </strings>
+</base>
