@@ -1,2 +1,4 @@
 TrainTroops/bin/*
 TrainTroops/obj/*
+*/.vs/*
+.vs/*
