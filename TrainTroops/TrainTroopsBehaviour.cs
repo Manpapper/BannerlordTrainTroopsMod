@@ -130,8 +130,8 @@ namespace TrainTroops
                     int trainableTroopCount = troop.Number - troop.Xp / minXPForUpgrade;
 
                     //Perform the math
-                    int xpEarned = (int)Math.Round((leaderLeadership * troopXPMultiplier + lvlDifference * LevelDifferenceMultiplier) * trainableTroopCount, MidpointRounding.AwayFromZero); ;
-                    party.Party.MemberRoster.AddXpToTroopAtIndex(xpEarned, i);
+                    int xpEarned = (int)Math.Round((leaderLeadership * troopXPMultiplier + lvlDifference * LevelDifferenceMultiplier) * trainableTroopCount, MidpointRounding.AwayFromZero);
+                    party.MemberRoster.AddXpToTroopAtIndex(i, xpEarned);
                     int troopsReadyToUpgradeCount = (troop.Xp + xpEarned) / minXPForUpgrade;
                     //Report troops ready to upgrade
                     if (troopsReadyToUpgradeCount != 0)
