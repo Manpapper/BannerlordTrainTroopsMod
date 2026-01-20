@@ -161,7 +161,7 @@ namespace TrainTroops
                 }
             }
 
-            if (party.IsMainParty)
+            if (party.IsMainParty && TrainTroopsSettings.Instance.DisplayLog)
             {
                 TextObject startingText = new TextObject("{=ifJye6ml23N}Total training XP for the day:");
                 InformationManager.DisplayMessage(new InformationMessage(startingText.ToString() + " " + totalXPEarned + "." + getTroopsReadyToUpgradeMessage(troopsReadyToUpgrade)));

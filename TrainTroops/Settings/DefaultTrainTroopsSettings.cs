@@ -13,6 +13,7 @@ namespace TrainTroops.Settings
         public float PlayerLevelDifferenceMultiplier { get; set; } = 10;
         public float TroopXPMultiplier { get; set; } = 3;
         public float LevelDifferenceMultiplier { get; set; } = 10;
+        public Boolean DisplayLog { get; set; } = false;
 
         public Dropdown<string> PartyToTrain { get; set; }
     }

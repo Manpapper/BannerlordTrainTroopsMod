@@ -15,6 +15,7 @@ namespace TrainTroops
         public float PlayerLevelDifferenceMultiplier { get => _provider.PlayerLevelDifferenceMultiplier; set => _provider.PlayerLevelDifferenceMultiplier = value; }
         public float TroopXPMultiplier { get => _provider.TroopXPMultiplier; set => _provider.TroopXPMultiplier = value; }
         public float LevelDifferenceMultiplier { get => _provider.LevelDifferenceMultiplier; set => _provider.LevelDifferenceMultiplier = value; }
+        public Boolean DisplayLog { get => _provider.DisplayLog; set => _provider.DisplayLog = value; }
 
         public Dropdown<string> PartyToTrain { get => _provider.PartyToTrain ; set => _provider.PartyToTrain = value; }
 

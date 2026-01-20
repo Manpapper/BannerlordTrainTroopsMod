@@ -17,6 +17,8 @@ namespace TrainTroops.Settings
 
         float LevelDifferenceMultiplier { get; set; }
 
+        Boolean DisplayLog { get; set; }
+
         Dropdown<string> PartyToTrain { get; set; }
     }
 }

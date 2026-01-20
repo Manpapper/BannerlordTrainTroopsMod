@@ -20,5 +20,7 @@
     <string id="ifJye6ml22N" text="(Default 10) The higher this is, the more impact level difference will have on training for the player party."/>
 	<string id="ifJye6ml23N" text="Total training XP for the day:"/>
 	<string id="ifJye6ml24N" text="Troops ready to upgrade:"/>
+	<string id="ifJye6ml25N" text="Display Log"/>
+	<string id="ifJye6ml26N" text="Allow to choose whenever log should appear or not"/>
   </strings>
 </base>

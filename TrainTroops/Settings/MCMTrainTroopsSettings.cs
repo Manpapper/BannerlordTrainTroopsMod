@@ -47,5 +47,8 @@ namespace TrainTroops.Settings
         [SettingPropertyGroup("{=ifJye6ml18N}Player Multiplier")]
         public float PlayerLevelDifferenceMultiplier { get; set; } = 10f;
 
+        [SettingPropertyBool("{=ifJye6ml25N}Display Log", HintText = "{=ieJye6ml26N}(Default false) Allow to choose whenever log should appear or not", Order = 1, RequireRestart = false)]
+        public Boolean DisplayLog { get; set; } = false;
+
     }
 }

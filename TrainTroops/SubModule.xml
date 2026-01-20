@@ -1,16 +1,16 @@
 ﻿<Module>
   <Name value="Train Troops with Leadership and Level"/>
   <Id value="TrainTroops"/>
-  <Version value="v1.4.0"/>
+  <Version value="v1.4.1"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <DependedModules>
-	<DependedModule Id="Native" DependentVersion="v1.3.2"/>
-	<DependedModule Id="SandBoxCore" DependentVersion="v1.3.2"/>
-	<DependedModule Id="Sandbox" DependentVersion="v1.3.2"/>
-	<DependedModule Id="CustomBattle" DependentVersion="v1.3.2"/>
-	<DependedModule Id="StoryMode" DependentVersion="v1.3.2"/>
-    <DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.11.2.0"/>
+	<DependedModule Id="Native" DependentVersion="v1.3.13"/>
+	<DependedModule Id="SandBoxCore" DependentVersion="v1.3.13"/>
+	<DependedModule Id="Sandbox" DependentVersion="v1.3.13"/>
+	<DependedModule Id="CustomBattle" DependentVersion="v1.3.13"/>
+	<DependedModule Id="StoryMode" DependentVersion="v1.3.13"/>
+    <DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.11.3.0"/>
   </DependedModules>
   <SubModules>
     <SubModule>

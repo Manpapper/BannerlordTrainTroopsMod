@@ -20,5 +20,7 @@
     <string id="ifJye6ml22N" text="(Par Défaut 10) Plus la valeur est élevé, plus la différence de niveau aura de l'influence pour le groupe du joueur."/>
 	<string id="ifJye6ml23N" text="XP Total produit dans la journée:"/>
 	<string id="ifJye6ml24N" text="Troupes prêtes à être améliorés:"/>
+	<string id="ifJye6ml25N" text="Afficher logs"/>
+	<string id="ifJye6ml26N" text="(Par défaut à non) Permet de choisir d'afficher (ou non) les logs"/>
   </strings>
 </base>
